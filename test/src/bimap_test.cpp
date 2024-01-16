@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
+#include "bimap.hpp"
 
-using namespace std;
-
-TEST(MyTest, play)
+TEST(BiMap, constructor)
 {
-    EXPECT_EQ(true, true);
+    BiMap<std::string, int> b({{"tite", 1}, {"tot", 2}});
+    // EXPECT_EQ()
 }
