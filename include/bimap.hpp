@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <unordered_map>
 
 template<typename K, typename V>
@@ -115,17 +114,5 @@ class BiMap {
         void operator=(const std::initializer_list<std::pair<K, V>>& l)
         {
             set(l);
-        }
-
-        void printMap()
-        {
-            std::cout << "m1: " << std::endl;
-            for(const auto& i : m1) {
-                std::cout << i.first << " | " << i.second << std::endl;
-            }
-            std::cout << "m2: " << std::endl;
-            for(const auto& i : m2) {
-                std::cout << i.first << " | " << i.second << std::endl;
-            }
         }
 };
