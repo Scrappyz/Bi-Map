@@ -20,14 +20,14 @@ class BiMap {
             set(l);
         }
 
-        V get(const K& key)
+        V at(const K& k)
         {
-            return m1.at(key);
+            return m1.at(k);
         }
 
-        K getInverse(const V& key)
+        K atInverse(const V& v)
         {
-            return m2.at(key);
+            return m2.at(v);
         }
 
         void set(const std::unordered_map<K, V>& m)
