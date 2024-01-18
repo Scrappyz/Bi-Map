@@ -20,12 +20,22 @@ class BiMap {
             set(l);
         }
 
-        V at(const K& k)
+        const std::unordered_map<K, V>& getMap()
+        {
+            return m1;
+        }
+
+        const std::unordered_map<V, K>& getInverseMap()
+        {
+            return m2;
+        }
+
+        const V& at(const K& k)
         {
             return m1.at(k);
         }
 
-        K atInverse(const V& v)
+        const K& atInverse(const V& v)
         {
             return m2.at(v);
         }
@@ -36,7 +46,7 @@ class BiMap {
             m2.clear();
             for(const auto& i : m) {
                 if(m2.count(i.second) > 0) {
-                    throw "Duplicate";
+                    throw std::runtime_error("duplicate value");
                 }
                 m2[i.second] = i.first;
             }
@@ -50,6 +60,51 @@ class BiMap {
                 m[i.first] = i.second;
             }
             set(m);
+        }
+
+        void setValue(const K& key, const V& value)
+        {
+            if(valueExist(value)) {
+                throw std::runtime_error("duplicate value");
+            }
+            V m2_key = m1.at(key);
+            m1[key] = value;
+            std::pair new_val = {value, m2.at(m2_key)};
+            m2.erase(m2_key);
+            m2.insert(new_val);
+        }
+
+        void insert(const K& key, const V& value)
+        {
+            if(keyExist(key)) {
+                throw std::runtime_error("duplicate key");
+            } else if(valueExist(value)) {
+                throw std::runtime_error("duplicate value");
+            }
+
+            m1.insert({key, value});
+            m2.insert({value, key});
+        }
+
+        void remove(const K& key)
+        {
+            if(!keyExist(key)) {
+                return;
+            }
+            
+            V m2_key = m1.at(key);
+            m1.erase(key);
+            m2.erase(m2_key);
+        }
+
+        bool keyExist(const K& key)
+        {
+            return m1.count(key) > 0;
+        }
+
+        bool valueExist(const V& value)
+        {
+            return m2.count(value) > 0;
         }
 
         void operator=(const std::unordered_map<K, V>& m)
